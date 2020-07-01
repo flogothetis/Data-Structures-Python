@@ -12,4 +12,6 @@ Output: Minimum of [0, 4] is 0
         
   
         
+        
+        
 The idea is to precompute minimum of all subarrays of size 2j where j varies from 0 to Log n. We make a table lookup[i][j] such that lookup[i][j] contains minimum of range starting from i and of size 2j. For example lookup[0][3] contains minimum of range [0, 7] (starting with 0 and of size 23)
