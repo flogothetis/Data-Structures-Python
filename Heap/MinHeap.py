@@ -78,3 +78,21 @@ class MinHeap:
 
 
 if __name__=='__main__':
+	minHeap = MinHeap(15)
+	minHeap.insert(5)
+	minHeap.insert(3)
+	minHeap.insert(17)
+	minHeap.insert(10)
+	minHeap.insert(84)
+	minHeap.insert(19)
+	minHeap.insert(6)
+	minHeap.insert(22)
+	minHeap.insert(9)
+
+	print('Extract all elements....')
+	while(True):
+		value=minHeap.extractMin()
+		if(value):
+			print(value, end=' ')
+		else:
+			break
