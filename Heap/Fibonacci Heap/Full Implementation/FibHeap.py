@@ -165,7 +165,7 @@ class FibHeap:
 				y=x.parent
 				if(y!=None and x.key <y.key):
 					self.cut(x,y)
-					self.cascadingCut(y)
+					self.cascading_cut(y)
 				if(x.key<self.min.key):
 					self.min=x
 	def cut (self,x,y):
@@ -182,7 +182,12 @@ class FibHeap:
 		z=y.parent
 		if(z is not None):
 			if(y.mark==False):
-				y.mark=
+				y.mark= True
+			else:
+				self.cut(y,z)
+				self.cascading_cut(z)
+
+
 
 
 
