@@ -41,7 +41,9 @@ class BTree:
 
 	def search(self,key):
 		if (self.root is not None):
-			return (self.root.search(key)==None)? None : key
+			if (self.root.search(key)==None):
+				return  None
+			return 	key
 
 
 
