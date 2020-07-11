@@ -210,6 +210,8 @@ obj.display()
 obj.extractMin()
 obj.display()
 
+
+
 #System.out.println(obj.extract_min());
 #obj.display();
 #System.out.println(obj.extract_min());
