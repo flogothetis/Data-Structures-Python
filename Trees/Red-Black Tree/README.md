@@ -26,10 +26,6 @@ After  color flip:
         /    \
      BLACK   BLACK
      
-     
-     
-     
-     
-     
+
         
             

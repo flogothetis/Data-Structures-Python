@@ -10,11 +10,43 @@ class RedBlackTree:
 			return
 		x=node.left
 		y=x.left
+		x.parent = node.parent
+
 		if(node.parent==None):
 			self.root =x
+
 		else:
-			x.parent=node.parent
-			if(node.parent.isLeftChild):
+			if(node.isLeftChild):
+				x.isLeftChild=True
+				x.parent.left=x
+			else:
+				x.isLeftChild=False
+				x.parent.right=x
+
+		if(x.right is not None):
+			node.left=x.right
+			node.left.isLeftChild=True
+			node.left.parent=node
+		else:
+			node.left=None
+
+		x.right=node
+		node.parent=x
+		node.isLeftChild=False
+
+
+	def leftRotation(self,node):
+		if(node is None):
+			return
+		x=node.right
+		y=x.right
+		x.parent = node.parent
+
+		if(node.parent==None):
+			self.root =x
+
+		else:
+			if(node.isLeftChild):
 				x.isLeftChild=True
 				x.parent.left=x
 			else:
@@ -22,40 +54,36 @@ class RedBlackTree:
 				x.parent.right=x
 
 
-		##### move node.left.right child
-		if(x.right is not None):
-			node.left=x.right
-			node.left.isLeftChild=True
-			node.left.parent=node
+		if(x.left is not None):
+			node.right=x.left
+			node.right.isLeftChild=False
+			node.right.parent=node
+		else:
+			node.right=None
 
-		x.right=node
+		x.left=node
 		node.parent=x
 		node.isLeftChild=True
-
-
-	def leftRotation(self,node):
-		temp=node.right
-		node.right=temp.left
-		if(node.right!=None):
-			node.right.parent=node
-			node.right.isLeftChild=False
-		if(node.parent==None):
-			self.root=temp
-		else:
-			temp.parent=node.parent
-			if(node.isLeftChild):
-				temp.isLeftChild=True
-				temp.parent.left=temp
-			else:
-				temp.isLeftChild=False
-				temp.parent.right=temp
-		temp.left=node
-		node.isLeftChild=True
-		node.parent=temp
 
 	def leftRightRotation(self, node):
 		self.leftRotation(node.left)
 		self.rightRotation(node)
+
+	def rightLeftRotation(self, node):
+		self.rightRotation(node.right)
+		self.leftRotation(node)
+
+
+	def inOrder(self):
+		self.inOrderRec(self.root)
+
+
+	def inOrderRec(self,root):
+		if(root is None):
+			return
+		self.inOrderRec(root.left)
+		print ( root.key, end =' ')
+		self.inOrderRec(root.right)
 
 	def rotateTree(self,node):
 		if(node.isLeftChild):
@@ -76,7 +104,7 @@ class RedBlackTree:
 				node.parent.isBlack=True
 				node.parent.left.isBlack=False
 			else:
-				self.rightLefttRotation(node.parent.parent)
+				self.leftRightRotation(node.parent.parent)
 				node.isBlack = True
 				node.right.isBlack=False
 				node.left.isBlack=False
@@ -87,17 +115,19 @@ class RedBlackTree:
 			#Black Aunt
 			if(node.parent.parent.right is None or node.parent.parent.right.isBlack):
 				return  self.rotateTree(node)
+			#Color Flip
 			if(node.parent.parent.right!=None ):
 				node.parent.parent.right.isBlack=True
-				node.parent.isBlack=True
-				node.parent.parent.isBlack=False
+			node.parent.isBlack=True
+			node.parent.parent.isBlack=False
 		else:
 			if (node.parent.parent.left is None or node.parent.parent.left.isBlack):
 				return self.rotateTree(node)
+			#Color Flip
 			if (node.parent.parent.left != None):
 				node.parent.parent.left.isBlack = True
-				node.parent.isBlack = True
-				node.parent.parent.isBlack = False
+			node.parent.isBlack = True
+			node.parent.parent.isBlack = False
 
 
 
@@ -107,7 +137,8 @@ class RedBlackTree:
 		if(node==self.root):
 			node.isBlack=True
 			return
-		if(not node.isBlack and not node.parent.isBlack):
+
+		if(node.isBlack==False and node.parent.isBlack==False):
 			self.correctTree(node)
 
 		self.checkColor(node.parent)
@@ -119,13 +150,15 @@ class RedBlackTree:
 		newNode= Node(key)
 		if(self.root is None):
 			self.root=newNode
-			return
+		else:
 		#else invoke recursive function
-		self.insertNode(self.root,newNode)
-		#check violation
-		self.checkColor(newNode)
+			self.insertNode(self.root,newNode)
+			#check violation
+			self.checkColor(newNode)
 		self.size+=1
 		self.root.isBlack=True
+
+
 
 	def insertNode(self,root,newNode):
 		if(root is None):
@@ -140,11 +173,38 @@ class RedBlackTree:
 				return
 			self.insertNode(root.left,newNode)
 		else:
-			if (root.left == None):
+			if (root.right == None):
 				root.right = newNode
 				newNode.parent = root
 				newNode.isLeftChild = False
 				return
 			self.insertNode(root.right,newNode)
+	def preOrder(self):
+		self.preOrderRec(self.root)
+
+	def preOrderRec(self, root):
+
+		if root is None:
+			return
+		print(root.key, end=" ")
+		self.preOrderRec(root.left)
+		self.preOrderRec(root.right)
+
+
+tree=RedBlackTree()
+
+tree.insert(7)
+tree.insert(6)
+tree.insert(5)
+tree.insert(4)
+tree.insert(3)
+tree.insert(2)
+tree.insert(1)
+
+print("Inoder Traversal of Created Tree")
+tree.inOrder()
+print()
+print("PostOrder Traversal of Created Tree")
+tree.preOrder()
 
 
