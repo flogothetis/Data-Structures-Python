@@ -53,6 +53,8 @@ class MinHeap:
 			return True
 		return False
 
+
+
 	def minHeapify(self,pos):
 		if(not self.isLeaf(pos)):
 			if(self.heap[pos]> self.heap[self.leftChild(pos)]
