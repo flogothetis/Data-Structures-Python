@@ -49,9 +49,12 @@ class MinHeap:
         if self.isLeaf(pos) == False and self.size > 0:
             left = self.leftChild(pos)
             right = self.rightChild(pos)
+            # Check if a child value is greater than its parent
+            # If it happens then swap parent with its child.
+
             if (self.heap[left][1] < self.heap[pos][1] or
                     self.heap[right][1] < self.heap[pos][1]):
-                if (self.heap[left][1] < self.heap[pos][1]):
+                if self.heap[left][1] < self.heap[pos][1]:
                     self.swap(left, pos)
                     self.heapify(left)
                 else:
